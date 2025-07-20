@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "4011a364-7465-42e0-99ad-1686c8608291",
+		"name": "test-project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9168414"
+	},
+	"item": [
+		{
+			"name": "[GET] /tasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/tasks",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] /tasks",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"My Cool Task\",\r\n    \"description\": \"This is definitely a task.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/tasks",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
