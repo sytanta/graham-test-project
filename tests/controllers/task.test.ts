@@ -1,11 +1,34 @@
 import request from "supertest";
+import bcrypt from "bcryptjs";
 
 import app from "../../app";
 import { Task } from "../../models/task";
+import { User } from "../../models/user";
+import { generateToken } from "../../utils/jwt";
 
 describe("Task Controller", () => {
+  let authToken: string;
+  let userId: string;
+
+  beforeAll(async () => {
+    // Create a test user with hashed password
+    const hashedPassword = await bcrypt.hash("password123", 12);
+    const user = await User.create({
+      email: "test@example.com",
+      password: hashedPassword,
+    });
+
+    userId = user.id!;
+    authToken = generateToken({ user_id: user.id!, email: user.email });
+  });
+
   beforeEach(async () => {
-    await Task.destroy({ where: {} });
+    await Task.destroy({ where: {}, truncate: true });
+  });
+
+  afterAll(async () => {
+    await User.destroy({ where: {}, truncate: true });
+    await Task.destroy({ where: {}, truncate: true });
   });
 
   describe("POST /api/tasks", () => {
@@ -17,6 +40,7 @@ describe("Task Controller", () => {
 
       const response = await request(app)
         .post("/api/tasks")
+        .set("Authorization", `Bearer ${authToken}`)
         .send(taskData)
         .expect(201);
 
@@ -29,11 +53,27 @@ describe("Task Controller", () => {
     it("should return 400 if title is missing", async () => {
       const response = await request(app)
         .post("/api/tasks")
+        .set("Authorization", `Bearer ${authToken}`)
         .send({ description: "Test Description" })
         .expect(400);
 
       expect(response.body.status).toBe("error");
       expect(response.body.message).toContain("Title is required");
+    });
+
+    it("should return 401 if no auth token provided", async () => {
+      const taskData = {
+        title: "Test Task",
+        description: "Test Description",
+      };
+
+      const response = await request(app)
+        .post("/api/tasks")
+        .send(taskData)
+        .expect(401);
+
+      expect(response.body.status).toBe("error");
+      expect(response.body.message).toBe("Access token required");
     });
   });
 
@@ -49,6 +89,7 @@ describe("Task Controller", () => {
     it("should return paginated tasks", async () => {
       const response = await request(app)
         .get("/api/tasks?page=1&limit=2")
+        .set("Authorization", `Bearer ${authToken}`)
         .expect(200);
 
       expect(response.body.status).toBe("success");
@@ -66,6 +107,7 @@ describe("Task Controller", () => {
     it("should filter tasks by completion status", async () => {
       const response = await request(app)
         .get("/api/tasks?completed=true")
+        .set("Authorization", `Bearer ${authToken}`)
         .expect(200);
 
       expect(response.body.status).toBe("success");
@@ -84,6 +126,7 @@ describe("Task Controller", () => {
 
       const response = await request(app)
         .get(`/api/tasks/${task.id}`)
+        .set("Authorization", `Bearer ${authToken}`)
         .expect(200);
 
       expect(response.body.status).toBe("success");
@@ -94,6 +137,7 @@ describe("Task Controller", () => {
     it("should return 404 if task not found", async () => {
       const response = await request(app)
         .get("/api/tasks/non-existent-id")
+        .set("Authorization", `Bearer ${authToken}`)
         .expect(404);
 
       expect(response.body.status).toBe("error");
@@ -116,6 +160,7 @@ describe("Task Controller", () => {
 
       const response = await request(app)
         .patch(`/api/tasks/${task.id}`)
+        .set("Authorization", `Bearer ${authToken}`)
         .send(updateData)
         .expect(200);
 
@@ -134,6 +179,7 @@ describe("Task Controller", () => {
 
       const response = await request(app)
         .patch(`/api/tasks/${task.id}`)
+        .set("Authorization", `Bearer ${authToken}`)
         .send({ completed: "invalid-boolean" })
         .expect(400);
 
@@ -152,6 +198,7 @@ describe("Task Controller", () => {
 
     //   const response = await request(app)
     //     .delete(`/api/tasks/${task.id}`)
+    // .set('Authorization', `Bearer ${authToken}`)
     //     .expect(204);
     //   expect(response.body.status).toBe("success");
 
@@ -163,6 +210,7 @@ describe("Task Controller", () => {
     it("should return 404 if task not found", async () => {
       const response = await request(app)
         .delete("/api/tasks/non-existent-id")
+        .set("Authorization", `Bearer ${authToken}`)
         .expect(404);
 
       expect(response.body.status).toBe("error");
