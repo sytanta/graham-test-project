@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 
 import { TaskService } from "../services/task";
-import { ApiResponse, CreateTaskRequest, UpdateTaskRequest } from "../types";
+import {
+  ApiResponse,
+  CreateTaskRequest,
+  Query,
+  UpdateTaskRequest,
+} from "../types";
 
 export class TaskController {
   private taskService: TaskService;
@@ -33,7 +38,9 @@ export class TaskController {
     res: Response<ApiResponse>
   ): Promise<void> => {
     try {
-      const result = await this.taskService.getTasks();
+      const query: Query = req.query;
+
+      const result = await this.taskService.getTasks(query);
 
       res.status(200).json({
         status: "success",

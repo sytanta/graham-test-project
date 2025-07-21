@@ -1,5 +1,6 @@
 import { Task } from "../models/task";
-import { CreateTaskRequest, UpdateTaskRequest } from "../types";
+import { CreateTaskRequest, Query, UpdateTaskRequest } from "../types";
+import { AppError } from "../middleware/error.middleware";
 
 export class TaskService {
   async createTask(taskData: CreateTaskRequest): Promise<Task> {
@@ -7,8 +8,18 @@ export class TaskService {
     return task;
   }
 
-  async getTasks() {
+  async getTasks(query: Query) {
+    const { completed } = query;
+
+    const whereClause: Record<string, string | number | boolean | undefined> =
+      {};
+    if (completed !== undefined) {
+      const parsed = JSON.parse(completed);
+      if (typeof parsed === "boolean") whereClause.completed = parsed;
+    }
+
     const { rows } = await Task.findAndCountAll({
+      where: whereClause,
       order: [["created_at", "DESC"]],
     });
 
@@ -20,7 +31,7 @@ export class TaskService {
   async getTaskById(id: string): Promise<Task> {
     const task = await Task.findByPk(id);
     if (!task) {
-      throw new Error("Task not found");
+      throw new AppError("Task not found", 404);
     }
     return task;
   }
