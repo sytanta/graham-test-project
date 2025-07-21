@@ -15,6 +15,7 @@ export class AppError extends Error {
   }
 }
 
+// Handle all errors in one middleware
 export const errorHandler = (
   error: Error,
   req: Request,
@@ -41,6 +42,7 @@ export const errorHandler = (
   });
 };
 
+// Handle not-found routes
 export const notFound = (req: Request, res: Response<ApiResponse>): void => {
   res.status(404).json({
     status: "error",

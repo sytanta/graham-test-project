@@ -12,6 +12,8 @@ declare global {
   }
 }
 
+// Verify authorization token,
+// add "user" to request object
 export const authenticateToken = (
   req: Request,
   res: Response<ApiResponse>,

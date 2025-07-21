@@ -2,6 +2,7 @@ import { Task } from "../models/task";
 import { CreateTaskRequest, TasksQuery, UpdateTaskRequest } from "../types";
 import { AppError } from "../middleware/error.middleware";
 
+// Handle task-related interaction with database from task apis
 export class TaskService {
   async createTask(taskData: CreateTaskRequest): Promise<Task> {
     const task = await Task.create(taskData);

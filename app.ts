@@ -9,7 +9,7 @@ import { taskRoutes } from "./routes/task";
 
 const app = express();
 
-// Security middleware
+// Security middlewares
 app.use(helmet());
 app.use(cors());
 

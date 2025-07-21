@@ -15,6 +15,7 @@ import { TaskController } from "../controllers/task";
 const router = Router();
 const taskController = new TaskController();
 
+// All task routes require authentication token
 router.use(authenticateToken);
 
 router.post("/", validateBody(createTaskSchema), taskController.createTask);

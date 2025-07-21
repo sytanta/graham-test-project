@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize";
 
 import config from "./index";
 
+// Development & production database config
 export const sequelize = new Sequelize(
   config.database.name!,
   config.database.username!,

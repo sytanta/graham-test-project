@@ -3,6 +3,7 @@ import Joi from "joi";
 
 import { ApiResponse } from "../types";
 
+// Joi validates request body
 export const validateBody = (schema: Joi.ObjectSchema) => {
   return (
     req: Request,
@@ -30,6 +31,7 @@ export const validateBody = (schema: Joi.ObjectSchema) => {
   };
 };
 
+// Validate query params
 export const validateQuery = (schema: Joi.ObjectSchema) => {
   return (
     req: Request,

@@ -5,6 +5,7 @@ import { User } from "../models/user";
 import { generateToken } from "../utils/jwt";
 import { AppError } from "../middleware/error.middleware";
 
+// Handle auth-related interaction with database
 export class AuthService {
   async register(
     userData: RegisterRequest

@@ -4,6 +4,7 @@ import { AuthService } from "../services/auth";
 import { LoginRequest, RegisterRequest } from "../types/auth";
 import { ApiResponse } from "../types/index";
 
+// Handle user registration & logging in
 export class AuthController {
   private authService: AuthService;
 
