@@ -9,9 +9,9 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
-    "test": "set NODE_ENV=test & jest",
-    "test:watch": "set NODE_ENV=test & jest --watch",
-    "test:coverage": "set NODE_ENV=test & jest --coverage"
+    "test": "cross-env NODE_ENV=test jest",
+    "test:watch": "cross-env NODE_ENV=test jest --watch",
+    "test:coverage": "cross-env NODE_ENV=test jest --coverage"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
