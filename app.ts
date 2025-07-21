@@ -1,0 +1,23 @@
+import express from "express";
+
+import { taskRoutes } from "./routes/task";
+
+const app = express();
+
+// Body parser
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use("/api/tasks", taskRoutes);
+
+// Health check
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    message: "Server is running",
+    timestamp: new Date().toISOString(),
+  });
+});
+
+export default app;
