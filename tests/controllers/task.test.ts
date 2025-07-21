@@ -46,6 +46,23 @@ describe("Task Controller", () => {
       ]);
     });
 
+    it("should return paginated tasks", async () => {
+      const response = await request(app)
+        .get("/api/tasks?page=1&limit=2")
+        .expect(200);
+
+      expect(response.body.status).toBe("success");
+      expect(response.body.data).toHaveLength(2);
+      expect(response.body.pagination).toEqual(
+        expect.objectContaining({
+          page: 1,
+          limit: 2,
+          total: 3,
+          total_pages: 2,
+        })
+      );
+    });
+
     it("should filter tasks by completion status", async () => {
       const response = await request(app)
         .get("/api/tasks?completed=true")
