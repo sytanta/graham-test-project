@@ -4,7 +4,7 @@ import { TaskService } from "../services/task";
 import {
   ApiResponse,
   CreateTaskRequest,
-  Query,
+  TasksQuery,
   UpdateTaskRequest,
 } from "../types";
 
@@ -38,13 +38,14 @@ export class TaskController {
     res: Response<ApiResponse>
   ): Promise<void> => {
     try {
-      const query: Query = req.query;
+      const query: TasksQuery = req.query;
 
       const result = await this.taskService.getTasks(query);
 
       res.status(200).json({
         status: "success",
         data: result.tasks,
+        pagination: result.pagination,
       });
     } catch (error) {
       throw error;

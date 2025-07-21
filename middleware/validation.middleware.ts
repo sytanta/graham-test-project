@@ -36,7 +36,7 @@ export const validateQuery = (schema: Joi.ObjectSchema) => {
     res: Response<ApiResponse>,
     next: NextFunction
   ): void => {
-    const { error, value } = schema.validate(req.query, {
+    const { error } = schema.validate(req.query, {
       abortEarly: false,
       stripUnknown: true,
     });
@@ -52,7 +52,6 @@ export const validateQuery = (schema: Joi.ObjectSchema) => {
       return;
     }
 
-    req.query = value;
     next();
   };
 };
