@@ -98,6 +98,6 @@ All task routes require users to be authenticated
 {
     status: "success"/"error",
     data: { ... }
-    message: "Success or error message"
+    message: "Additional success or error message"
 }
 ```
