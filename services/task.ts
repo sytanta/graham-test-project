@@ -1,5 +1,5 @@
 import { Task } from "../models/task";
-import { CreateTaskRequest, Query, UpdateTaskRequest } from "../types";
+import { CreateTaskRequest, TasksQuery, UpdateTaskRequest } from "../types";
 import { AppError } from "../middleware/error.middleware";
 
 export class TaskService {
@@ -8,8 +8,12 @@ export class TaskService {
     return task;
   }
 
-  async getTasks(query: Query) {
-    const { completed } = query;
+  async getTasks(query: TasksQuery) {
+    let { page = 1, limit = 10, completed } = query;
+
+    page = Number(page ?? 1);
+    limit = Number(limit ?? 10);
+    const offset = (page - 1) * limit;
 
     const whereClause: Record<string, string | number | boolean | undefined> =
       {};
@@ -18,13 +22,21 @@ export class TaskService {
       if (typeof parsed === "boolean") whereClause.completed = parsed;
     }
 
-    const { rows } = await Task.findAndCountAll({
+    const { count, rows } = await Task.findAndCountAll({
       where: whereClause,
+      limit: Number(limit),
+      offset,
       order: [["created_at", "DESC"]],
     });
 
     return {
       tasks: rows,
+      pagination: {
+        page,
+        limit,
+        total: count,
+        total_pages: Math.ceil(count / limit),
+      },
     };
   }
 
