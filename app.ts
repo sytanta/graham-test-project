@@ -1,5 +1,6 @@
 import express from "express";
 
+import { errorHandler, notFound } from "./middleware/error.middleware";
 import { taskRoutes } from "./routes/task";
 
 const app = express();
@@ -19,5 +20,9 @@ app.get("/health", (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Error handling
+app.use(notFound);
+app.use(errorHandler);
 
 export default app;
