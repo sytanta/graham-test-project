@@ -19,91 +19,71 @@ export class TaskController {
     req: Request,
     res: Response<ApiResponse>
   ): Promise<void> => {
-    try {
-      const taskData: CreateTaskRequest = req.body;
+    const taskData: CreateTaskRequest = req.body;
 
-      const task = await this.taskService.createTask(taskData);
+    const task = await this.taskService.createTask(taskData);
 
-      res.status(201).json({
-        status: "success",
-        data: task,
-      });
-    } catch (error) {
-      throw error;
-    }
+    res.status(201).json({
+      status: "success",
+      data: task,
+    });
   };
 
   getTasks = async (
     req: Request,
     res: Response<ApiResponse>
   ): Promise<void> => {
-    try {
-      const query: TasksQuery = req.query;
+    const query: TasksQuery = req.query;
 
-      const result = await this.taskService.getTasks(query);
+    const result = await this.taskService.getTasks(query);
 
-      res.status(200).json({
-        status: "success",
-        data: result.tasks,
-        pagination: result.pagination,
-      });
-    } catch (error) {
-      throw error;
-    }
+    res.status(200).json({
+      status: "success",
+      data: result.tasks,
+      pagination: result.pagination,
+    });
   };
 
   getTaskById = async (
     req: Request,
     res: Response<ApiResponse>
   ): Promise<void> => {
-    try {
-      const { id } = req.params;
+    const { id } = req.params;
 
-      const task = await this.taskService.getTaskById(id);
+    const task = await this.taskService.getTaskById(id);
 
-      res.status(200).json({
-        status: "success",
-        data: task,
-      });
-    } catch (error) {
-      throw error;
-    }
+    res.status(200).json({
+      status: "success",
+      data: task,
+    });
   };
 
   updateTask = async (
     req: Request,
     res: Response<ApiResponse>
   ): Promise<void> => {
-    try {
-      const { id } = req.params;
-      const updateData: UpdateTaskRequest = req.body;
+    const { id } = req.params;
+    const updateData: UpdateTaskRequest = req.body;
 
-      const task = await this.taskService.updateTask(id, updateData);
+    const task = await this.taskService.updateTask(id, updateData);
 
-      res.status(200).json({
-        status: "success",
-        data: task,
-      });
-    } catch (error) {
-      throw error;
-    }
+    res.status(200).json({
+      status: "success",
+      data: task,
+    });
   };
 
   deleteTask = async (
     req: Request,
     res: Response<ApiResponse>
   ): Promise<void> => {
-    try {
-      const { id } = req.params;
+    const { id } = req.params;
 
-      await this.taskService.deleteTask(id);
+    await this.taskService.deleteTask(id);
 
-      res.status(204).json({
-        status: "success",
-        message: "Task deleted successfully",
-      });
-    } catch (error) {
-      throw error;
-    }
+    res.status(204).json({
+      status: "success",
+      message: "Task deleted successfully",
+    });
   };
 }

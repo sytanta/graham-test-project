@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+import { authenticateToken } from "../middleware/auth.middleware";
 import {
   validateBody,
   validateQuery,
@@ -13,6 +14,8 @@ import { TaskController } from "../controllers/task";
 
 const router = Router();
 const taskController = new TaskController();
+
+router.use(authenticateToken);
 
 router.post("/", validateBody(createTaskSchema), taskController.createTask);
 router.get("/", validateQuery(getTasksSchema), taskController.getTasks);
