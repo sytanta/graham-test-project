@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+
+dotenv.config({ path: ".env.test" });
+
 import { sequelize } from "../config/database";
 
 beforeAll(async () => {
