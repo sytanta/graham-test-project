@@ -18,9 +18,16 @@ export interface UpdateTaskRequest {
   completed?: boolean;
 }
 
-export interface Query {
+export interface PaginationQuery {
+  page?: number;
+  limit?: number;
+}
+
+export interface GetTasksQuery {
   completed?: any;
 }
+
+export type TasksQuery = GetTasksQuery & PaginationQuery;
 
 export interface ApiResponse<T = any> {
   status: "success" | "error";
