@@ -1,0 +1,39 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Output of 'npm pack'
+*.tgz
+
+# Environment variables
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Build artifacts and caches
+build/
+dist/
+.cache/
+.next/ # For Next.js projects, if integrated
+out/ # For Next.js projects, if integrated
+.parcel-cache/ # For Parcel bundler
+
+# Editor and OS specific files
+.vscode/
+.DS_Store
+.sass-cache/
+.tmp/
+.rvmrc
+*~
