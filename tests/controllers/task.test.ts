@@ -189,23 +189,23 @@ describe("Task Controller", () => {
   });
 
   describe("DELETE /api/tasks/:id", () => {
-    // it("should delete a task", async () => {
-    //   const task = await Task.create({
-    //     title: "Task to Delete",
-    //     description: "This task will be deleted",
-    //     completed: false,
-    //   });
+    it("should delete a task", async () => {
+      const task = await Task.create({
+        title: "Task to Delete",
+        description: "This task will be deleted",
+        completed: false,
+      });
 
-    //   const response = await request(app)
-    //     .delete(`/api/tasks/${task.id}`)
-    // .set('Authorization', `Bearer ${authToken}`)
-    //     .expect(204);
-    //   expect(response.body.status).toBe("success");
+      const response = await request(app)
+        .delete(`/api/tasks/${task.id}`)
+        .set("Authorization", `Bearer ${authToken}`)
+        .expect(204);
+      expect(response.noContent).toBeTruthy();
 
-    //   // Verify task is deleted
-    //   const deletedTask = await Task.findByPk(task.id);
-    //   expect(deletedTask).toBeNull();
-    // });
+      // Verify task is deleted
+      const deletedTask = await Task.findByPk(task.id);
+      expect(deletedTask).toBeNull();
+    });
 
     it("should return 404 if task not found", async () => {
       const response = await request(app)

@@ -31,6 +31,9 @@ dist/
 out/ # For Next.js projects, if integrated
 .parcel-cache/ # For Parcel bundler
 
+# Test coverage
+coverage/
+
 # Editor and OS specific files
 .vscode/
 .DS_Store
