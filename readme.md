@@ -77,6 +77,8 @@ All task routes require users to be authenticated
 
 ### Authentication
 
+Token-based authentication
+
 - `POST /api/auth/register` - register, `email` & `password` required
 - `POST /api/auth/login` - login, `email` & `password` required
 
