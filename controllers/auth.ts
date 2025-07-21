@@ -15,42 +15,34 @@ export class AuthController {
     req: Request,
     res: Response<ApiResponse>
   ): Promise<void> => {
-    try {
-      const userData: RegisterRequest = req.body;
-      const { user, token } = await this.authService.register(userData);
+    const userData: RegisterRequest = req.body;
+    const { user, token } = await this.authService.register(userData);
 
-      res.status(201).json({
-        status: "success",
-        data: {
-          user: {
-            id: user.id,
-            email: user.email,
-          },
-          token,
+    res.status(201).json({
+      status: "success",
+      data: {
+        user: {
+          id: user.id,
+          email: user.email,
         },
-      });
-    } catch (error) {
-      throw error;
-    }
+        token,
+      },
+    });
   };
 
   login = async (req: Request, res: Response<ApiResponse>): Promise<void> => {
-    try {
-      const loginData: LoginRequest = req.body;
-      const { user, token } = await this.authService.login(loginData);
+    const loginData: LoginRequest = req.body;
+    const { user, token } = await this.authService.login(loginData);
 
-      res.status(200).json({
-        status: "success",
-        data: {
-          user: {
-            id: user.id,
-            email: user.email,
-          },
-          token,
+    res.status(200).json({
+      status: "success",
+      data: {
+        user: {
+          id: user.id,
+          email: user.email,
         },
-      });
-    } catch (error) {
-      throw error;
-    }
+        token,
+      },
+    });
   };
 }
