@@ -35,8 +35,6 @@ export const errorHandler = (
     message = "Resource already exists";
   }
 
-  console.error(error);
-
   res.status(statusCode).json({
     status: "error",
     message,
