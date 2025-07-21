@@ -69,7 +69,7 @@ JWT_EXPIRES_IN="24h"
 
 All task routes require users to be authenticated
 
-- `POST /api/tasks` - create a new task
+- `POST /api/tasks` - create a new task. New tasks always have `completed: false`
 - `GET /api/tasks` - get all tasks, pagination supported. For ex: `GET /api/tasks?completed=false&page=1&limit=10`
 - `GET /api/tasks/:id` - get a task by id
 - `PATCH /api/tasks/:id` - update task by id
